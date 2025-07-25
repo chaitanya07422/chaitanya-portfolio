@@ -95,7 +95,7 @@ const Hero = () => {
 
           {/* Description */}
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-            CI/CD Pipeline Test - Passionate about creating innovative solutions with cutting-edge technology. 
+            Passionate about creating innovative solutions with cutting-edge technology. 
             Currently working on AI-powered learning devices and exploring the intersection of technology and education.
           </p>
 
