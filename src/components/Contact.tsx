@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Mail, Phone, MapPin, Github, Linkedin, Code, Copy, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { portfolioData } from '@/data/portfolio';
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 import Lottie from 'lottie-react';
 import contactLottie from '@/assets/lottie/contact.json';
 
