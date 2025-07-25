@@ -110,7 +110,7 @@ const Hero = () => {
           {/* Social Links */}
           <div className="flex justify-center space-x-6 mb-12 animate-fade-in" style={{ animationDelay: '0.9s' }}>
             <a
-              href={portfolioData.personal.github}
+              href="https://github.com/chaitanya07422"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110"
@@ -118,7 +118,7 @@ const Hero = () => {
               <Github className="h-6 w-6" />
             </a>
             <a
-              href={portfolioData.personal.linkedin}
+              href="https://www.linkedin.com/in/chaitanya-kadavakollu-354084278/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110"

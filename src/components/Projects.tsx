@@ -199,9 +199,11 @@ const Projects = () => {
 
                         <div className="flex space-x-2">
                           {project.github && (
-                            <Button variant="outline" size="sm">
-                              <Github className="w-4 h-4 mr-2" />
-                              View Code
+                            <Button variant="outline" size="sm" asChild>
+                              <a href={project.github || "https://github.com/chaitanya07422"} target="_blank" rel="noopener noreferrer">
+                                <Github className="w-4 h-4 mr-2" />
+                                View Code
+                              </a>
                             </Button>
                           )}
                           <Button variant="outline" size="sm">
@@ -214,8 +216,10 @@ const Projects = () => {
                   </Dialog>
 
                   {project.github && (
-                    <Button variant="ghost" size="icon">
-                      <Github className="h-4 w-4" />
+                    <Button variant="ghost" size="icon" asChild>
+                      <a href={project.github || "https://github.com/chaitanya07422"} target="_blank" rel="noopener noreferrer">
+                        <Github className="h-4 w-4" />
+                      </a>
                     </Button>
                   )}
                 </div>

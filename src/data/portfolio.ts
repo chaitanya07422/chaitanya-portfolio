@@ -21,10 +21,18 @@ export const portfolioData = {
     },
     {
       institution: "Narayana Junior College",
-      degree: "MPC",
+      degree: "Intermediate",
       cgpa: "9.3",
       location: "Gudavalli, India",
       duration: "2019 – 2021",
+      current: false
+    },
+    {
+      institution: "Narayana Techno School",
+      degree: "10th Class",
+      cgpa: "98%",
+      location: "Avanigadda, India",
+      duration: "2019",
       current: false
     }
   ],

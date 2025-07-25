@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Mail, Phone, MapPin, Github, Linkedin, Code, Copy, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { portfolioData } from '@/data/portfolio';
+import emailjs from 'emailjs-com';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -26,12 +27,33 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would integrate with EmailJS or similar service
-    toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. I'll get back to you soon!",
+
+    emailjs.send(
+      'service_0s23l79',      // Replace with your EmailJS service ID
+      'template_xz0qn9j',     // Replace with your EmailJS template ID
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: 'kadavakolluchaitanya@gmail.com', // recipient
+      },
+      '3ZlpL-EYmVg3YfUCl'          // Replace with your EmailJS user ID (public key)
+    )
+    .then(() => {
+      toast({
+        title: "Message sent!",
+        description: "Thank you for reaching out. I'll get back to you soon!",
+      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    })
+    .catch((error) => {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+      });
+      console.error('EmailJS error:', error);
     });
-    setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   const copyToClipboard = (text: string, type: string) => {
@@ -45,7 +67,7 @@ const Contact = () => {
   const socialLinks = [
     { icon: Github, url: portfolioData.personal.github, label: 'GitHub' },
     { icon: Linkedin, url: portfolioData.personal.linkedin, label: 'LinkedIn' },
-    { icon: Code, url: portfolioData.personal.leetcode, label: 'LeetCode' }
+    { icon: Code, url: "https://leetcode.com/u/kadavakollu123/", label: 'LeetCode' }
   ];
 
   return (

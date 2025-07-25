@@ -43,7 +43,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            Chaitanya
+            Chaitanya Kadavakollu
           </div>
 
           {/* Desktop Navigation */}
