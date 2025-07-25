@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Github, Linkedin, Code, ArrowDown } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
+import Lottie from 'lottie-react';
+import heroLottie from '@/assets/lottie/hero-lottie.json';
 
 const Hero = () => {
   const [typedText, setTypedText] = useState('');
@@ -46,13 +48,10 @@ const Hero = () => {
 
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-hero">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-4 -left-4 w-72 h-72 bg-primary/20 rounded-full mix-blend-multiply animate-float"></div>
-        <div className="absolute top-1/2 -right-4 w-72 h-72 bg-accent/20 rounded-full mix-blend-multiply animate-float" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply animate-float" style={{ animationDelay: '2s' }}></div>
+      {/* Lottie Animation as Background */}
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-20">
+        <Lottie animationData={heroLottie} loop autoPlay style={{ width: '100%', height: '100%' }} />
       </div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center animate-fade-in-up">
           {/* Greeting */}
@@ -63,19 +62,33 @@ const Hero = () => {
           </div>
 
           {/* Name */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6 animate-scale-in">
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
+          <h1
+            className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6"
+            style={{
+              background: 'linear-gradient(90deg, #ff6a00, #ee0979, #00c3ff, #43e97b)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: '2px 2px 8px rgba(0,0,0,0.15), 0 4px 24px #fff'
+            }}
+          >
+            <span>
               {portfolioData.personal.name}
             </span>
           </h1>
 
           {/* Dynamic Role */}
           <div className="mb-8 h-16 flex items-center justify-center">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl text-muted-foreground">
+            <h2
+              className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4"
+              style={{
+                color: '#3b1c7a',
+                background: 'none',
+                textShadow: '2px 2px 8px rgba(255,255,255,0.7), 0 2px 12px #3b1c7a'
+              }}
+            >
               I'm a{' '}
-              <span className="text-primary font-semibold relative">
+              <span className="text-primary font-bold relative">
                 {typedText}
-                <span className="animate-blink border-r-2 border-primary ml-1"></span>
               </span>
             </h2>
           </div>

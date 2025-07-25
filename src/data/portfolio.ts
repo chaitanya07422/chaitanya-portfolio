@@ -38,10 +38,10 @@ export const portfolioData = {
   ],
 
   skills: {
-    languages: ["Java (DSA)", "C", "Python"],
-    tools: ["Git & GitHub", "IntelliJ IDEA", "Visual Studio Code"],
-    webDevelopment: ["HTML", "CSS", "SQL", "React", "Tailwind CSS"],
-    softwareDevelopment: ["Object-Oriented Programming (OOPs)", "Agile Methodologies"],
+    languages: ["Java (DSA)", "C", "C++", "Python"],
+    tools: ["Git & GitHub", "IntelliJ IDEA", "Visual Studio Code", "Qt Creator"],
+    webDevelopment: ["HTML", "CSS", "SQL", "React", "Tailwind CSS","QML"],
+    softwareDevelopment: ["Object-Oriented Programming (OOPs)", "Agile Methodologies","gRPC","Protobuf","CI/CD"],
     softSkills: ["Excellent Communication", "People Management", "Better Presentation skills"]
   },
 
@@ -193,25 +193,26 @@ export const portfolioData = {
       name: "CMOS Digital VLSI Design",
       platform: "NPTEL",
       date: "JAN 2024",
-      verificationLink: "#"
+      verificationLink: "https://www.linkedin.com/posts/chaitanya-kadavakollu-354084278_cmos-digital-vlsi-activity-7195371126049366016-aDLw/?utm_source=combined_share_message&utm_medium=member_desktop"
     },
     {
       name: "Introduction to Java and Object-Oriented Programming",
       platform: "Coursera",
       date: "OCT 2023",
-      verificationLink: "#"
+      verificationLink: "https://www.coursera.org/account/accomplishments/verify/P6CES79LZ9C4"
     },
     {
       name: "Introduction to Networking",
       platform: "CISCO Network Academy",
       date: "APR 2023",
-      verificationLink: "#"
+      verificationLink: "https://www.credly.com/badges/888f22f1-4cce-4ec2-976b-44735c7a1815/linked_in_profile"
     },
     {
       name: "Artificial Intelligence Primer Certification",
       platform: "Infosys",
       date: "OCT 2024",
-      verificationLink: "#"
+      verificationLink: "https://infyspringboard.onwingspan.com/web/en/login?ref=%2Fapp%2Fprofile%2Fcompetency%2Fcertification%23iss%3Dhttps:%2F%2Finfyspringboard.onwingspan.com%2Fauth%2Frealms%2Finfyspringboard"
+      
     }
   ]
 };

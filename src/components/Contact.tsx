@@ -8,6 +8,8 @@ import { Mail, Phone, MapPin, Github, Linkedin, Code, Copy, Send } from 'lucide-
 import { useToast } from '@/hooks/use-toast';
 import { portfolioData } from '@/data/portfolio';
 import emailjs from 'emailjs-com';
+import Lottie from 'lottie-react';
+import contactLottie from '@/assets/lottie/contact.json';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -72,6 +74,10 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-20 bg-muted/30">
+      {/* Lottie Animation at the Top */}
+      <div className="w-full flex justify-center mb-8">
+        <Lottie animationData={contactLottie} loop autoPlay style={{ width: 220, height: 220 }} />
+      </div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
