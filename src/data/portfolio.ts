@@ -38,10 +38,10 @@ export const portfolioData = {
   ],
 
   skills: {
-    languages: ["Java (DSA)", "C", "C++", "Python"],
-    tools: ["Git & GitHub", "IntelliJ IDEA", "Visual Studio Code", "Qt Creator"],
-    webDevelopment: ["HTML", "CSS", "SQL", "React", "Tailwind CSS","QML"],
-    softwareDevelopment: ["Object-Oriented Programming (OOPs)", "Agile Methodologies","gRPC","Protobuf","CI/CD"],
+    languages: ["Java (DSA)", "C", "C++", "Python", "TypeScript", "JavaScript"],
+    tools: ["Git & GitHub", "IntelliJ IDEA", "Visual Studio Code", "Qt Creator", "Docker"],
+    webDevelopment: ["HTML", "CSS", "SQL", "React", "Tailwind CSS", "QML", "NestJS", "Fastify"],
+    softwareDevelopment: ["Object-Oriented Programming (OOPs)", "Agile Methodologies", "gRPC", "Protobuf", "CI/CD", "PostHog"],
     softSkills: ["Excellent Communication", "People Management", "Better Presentation skills"]
   },
 
@@ -56,9 +56,12 @@ export const portfolioData = {
       responsibilities: [
         "Developed UI using Qt (QML + C++) and gRPC, optimized for embedded Linux systems",
         "Built various applications like Dashboard, Lulu (AI assistant), Browser, Games, Quiz, Podcasts, and Settings",
-        "Key contributor to UI and backend implementation"
+        "Key contributor to UI and backend implementation",
+        "Implemented backend services using NestJS and Fastify for API development",
+        "Containerized applications using Docker for deployment and scaling",
+        "Integrated PostHog for analytics and user behavior tracking"
       ],
-      technologies: ["Qt 6", "QML", "C++", "gRPC", "Protobuf", "Linux"]
+      technologies: ["Qt 6", "QML", "C++", "gRPC", "Protobuf", "Linux", "NestJS", "Fastify", "Docker", "PostHog"]
     },
     {
       role: "AI-ML Intern",
@@ -178,7 +181,7 @@ export const portfolioData = {
       description: "Landsat: Fly on Your Fingertips project reached the grand finals, distinguishing itself among 2,000+ entries for innovative satellite data accessibility.",
       date: "2024",
       category: "Competition",
-      role: "Team Lead"
+      role: "Team member"
     },
     {
       title: "Team Lead - Infosys Internship",
