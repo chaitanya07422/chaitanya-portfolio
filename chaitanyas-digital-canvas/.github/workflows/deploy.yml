@@ -1,0 +1,44 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: chaitanyas-digital-canvas/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('chaitanyas-digital-canvas/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    
+    - name: Install dependencies
+      run: |
+        cd chaitanyas-digital-canvas
+        npm ci
+    
+    - name: Build project
+      run: |
+        cd chaitanyas-digital-canvas
+        npm run build
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: chaitanyas-digital-canvas/dist
+        retention-days: 1
