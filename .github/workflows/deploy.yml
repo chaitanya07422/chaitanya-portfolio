@@ -1,4 +1,4 @@
-name: Deploy to Vercel
+name: Build Portfolio
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -29,10 +29,9 @@ jobs:
     - name: Build project
       run: npm run build
 
-    - name: Deploy to Vercel
-      uses: amondnet/vercel-action@v25
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
       with:
-        vercel-token: ${{ secrets.VERCEL_TOKEN }}
-        vercel-org-id: ${{ secrets.ORG_ID }}
-        vercel-project-id: ${{ secrets.PROJECT_ID }}
-        working-directory: ./chaitanyas-digital-canvas
+        name: dist
+        path: chaitanyas-digital-canvas/dist
+        retention-days: 7
