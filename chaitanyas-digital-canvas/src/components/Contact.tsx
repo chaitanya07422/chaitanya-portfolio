@@ -84,7 +84,7 @@ const Contact = () => {
             Get In Touch
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Let's connect! Whether you have a project in mind, want to collaborate, or just want to say hello.
+            Open to professional inquiries, collaboration opportunities, and technical discussions.
           </p>
         </div>
 

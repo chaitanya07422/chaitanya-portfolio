@@ -34,8 +34,8 @@ const Projects = () => {
             Featured Projects
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A showcase of my work spanning AI/ML, web development, IoT, and innovative solutions 
-            that demonstrate my passion for technology and problem-solving.
+            Selected projects across AI/ML, embedded systems, web applications, and IoT—demonstrating 
+            technical depth and end-to-end delivery capability.
           </p>
         </div>
 

@@ -11,9 +11,9 @@ const Hero = () => {
   
   const roles = [
     'Software Developer',
-    'AI & ML Enthusiast', 
-    'Problem Solver',
-    'Full Stack Developer'
+    'AI/ML Engineer',
+    'Full-Stack Developer',
+    'Software Developer @ PocketRocket Labs'
   ];
 
   useEffect(() => {
@@ -95,8 +95,7 @@ const Hero = () => {
 
           {/* Description */}
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-            Passionate about creating innovative solutions with cutting-edge technology. 
-            Currently working on AI-powered learning devices and exploring the intersection of technology and education.
+            {portfolioData.personal.shortBio}
           </p>
 
           {/* CTA Buttons */}

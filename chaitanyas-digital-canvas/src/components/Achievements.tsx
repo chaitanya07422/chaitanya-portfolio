@@ -23,7 +23,7 @@ const Achievements = () => {
             Achievements & Recognition
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Notable accomplishments and recognitions that highlight my dedication to excellence and leadership.
+            Key milestones in engineering performance, technical competition, and team leadership.
           </p>
         </div>
 

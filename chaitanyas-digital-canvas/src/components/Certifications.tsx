@@ -23,7 +23,7 @@ const Certifications = () => {
             Certifications
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Professional certifications and completed courses that showcase my commitment to continuous learning.
+            Industry certifications and completed coursework reflecting ongoing professional development.
           </p>
         </div>
 

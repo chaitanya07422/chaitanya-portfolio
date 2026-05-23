@@ -14,9 +14,11 @@ const About = () => {
 
   const allSkills = [
     ...portfolioData.skills.languages,
+    ...portfolioData.skills.frontend,
+    ...portfolioData.skills.backend,
+    ...portfolioData.skills.ai,
+    ...portfolioData.skills.devops,
     ...portfolioData.skills.tools,
-    ...portfolioData.skills.webDevelopment,
-    ...portfolioData.skills.softwareDevelopment,
     ...portfolioData.skills.softSkills
   ];
 
@@ -56,9 +58,11 @@ const About = () => {
 
   const skillCategories = [
     { title: 'Languages', skills: portfolioData.skills.languages, color: 'bg-primary' },
-    { title: 'Tools & Platforms', skills: portfolioData.skills.tools, color: 'bg-accent' },
-    { title: 'Web Development', skills: portfolioData.skills.webDevelopment, color: 'bg-primary' },
-    { title: 'Software Development', skills: portfolioData.skills.softwareDevelopment, color: 'bg-accent' },
+    { title: 'Frontend', skills: portfolioData.skills.frontend, color: 'bg-accent' },
+    { title: 'Backend', skills: portfolioData.skills.backend, color: 'bg-primary' },
+    { title: 'AI & ML', skills: portfolioData.skills.ai, color: 'bg-accent' },
+    { title: 'DevOps & Cloud', skills: portfolioData.skills.devops, color: 'bg-primary' },
+    { title: 'Tools', skills: portfolioData.skills.tools, color: 'bg-accent' },
     { title: 'Soft Skills', skills: portfolioData.skills.softSkills, color: 'bg-primary' }
   ];
 
@@ -73,8 +77,8 @@ const About = () => {
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
             About Me
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A passionate developer with a strong foundation in computer science and a keen interest in artificial intelligence and machine learning technologies.
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            {portfolioData.personal.bio}
           </p>
         </div>
 
@@ -145,17 +149,6 @@ const About = () => {
               </div>
             ))}
 
-            {/* Personal Note */}
-            <Card className="bg-gradient-accent/10 border-accent/20 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
-              <CardContent className="p-6">
-                <p className="text-muted-foreground leading-relaxed">
-                  I'm passionate about leveraging technology to solve real-world problems. 
-                  My experience ranges from developing AI-powered applications to creating 
-                  intuitive user interfaces. I enjoy working in collaborative environments 
-                  and am always eager to learn new technologies and methodologies.
-                </p>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>

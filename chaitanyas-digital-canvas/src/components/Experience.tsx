@@ -12,8 +12,7 @@ const Experience = () => {
             Professional Experience
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            My journey in software development and artificial intelligence, working with innovative companies 
-            and cutting-edge technologies.
+            A record of professional experience across product engineering, AI systems, and cloud infrastructure.
           </p>
         </div>
 
@@ -29,9 +28,14 @@ const Experience = () => {
               <CardHeader>
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                   <div className="flex-1">
-                    <CardTitle className="text-xl sm:text-2xl font-bold text-foreground flex items-center gap-2">
+                    <CardTitle className="text-xl sm:text-2xl font-bold text-foreground flex items-center gap-2 flex-wrap">
                       <Building className="h-5 w-5 text-primary" />
                       {exp.role}
+                      {exp.employmentType && (
+                        <Badge variant="secondary" className="text-xs">
+                          {exp.employmentType}
+                        </Badge>
+                      )}
                       {exp.current && (
                         <Badge className="bg-primary text-primary-foreground animate-glow">
                           Current
@@ -55,26 +59,44 @@ const Experience = () => {
               </CardHeader>
 
               <CardContent className="space-y-6">
-                {/* Description */}
                 <p className="text-muted-foreground leading-relaxed">{exp.description}</p>
 
-                {/* Responsibilities */}
-                <div>
-                  <h4 className="font-semibold text-foreground mb-3 flex items-center">
-                    <Users className="mr-2 h-4 w-4 text-primary" />
-                    Key Responsibilities
-                  </h4>
-                  <ul className="space-y-2">
-                    {exp.responsibilities.map((responsibility, respIndex) => (
-                      <li key={respIndex} className="flex items-start">
-                        <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                        <span className="text-muted-foreground">{responsibility}</span>
-                      </li>
+                {'responsibilityGroups' in exp && exp.responsibilityGroups && exp.responsibilityGroups.length > 0 ? (
+                  <div className="space-y-6">
+                    {exp.responsibilityGroups.map((group, groupIndex) => (
+                      <div key={groupIndex}>
+                        <h4 className="font-semibold text-foreground mb-3 flex items-center">
+                          <Users className="mr-2 h-4 w-4 text-primary" />
+                          {group.title}
+                        </h4>
+                        <ul className="space-y-2">
+                          {group.items.map((item, itemIndex) => (
+                            <li key={itemIndex} className="flex items-start">
+                              <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                              <span className="text-muted-foreground">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     ))}
-                  </ul>
-                </div>
+                  </div>
+                ) : exp.responsibilities.length > 0 ? (
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-3 flex items-center">
+                      <Users className="mr-2 h-4 w-4 text-primary" />
+                      Key Responsibilities
+                    </h4>
+                    <ul className="space-y-2">
+                      {exp.responsibilities.map((responsibility, respIndex) => (
+                        <li key={respIndex} className="flex items-start">
+                          <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                          <span className="text-muted-foreground">{responsibility}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
 
-                {/* Technologies */}
                 <div>
                   <h4 className="font-semibold text-foreground mb-3 flex items-center">
                     <Code className="mr-2 h-4 w-4 text-primary" />
@@ -93,15 +115,15 @@ const Experience = () => {
                   </div>
                 </div>
 
-                {/* Special highlighting for current Oriel project */}
-                {exp.company === "Pocket Rocket Labs" && (
+                {exp.company === "PocketRocket Labs" && (
                   <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 mt-4">
                     <h4 className="font-semibold text-primary mb-2 flex items-center">
-                      🎯 Current Project: Oriel
+                      🎯 Current Project: Oriel (Kea)
                     </h4>
                     <p className="text-sm text-muted-foreground">
-                      Developing the complete system UI for Aura, an AI-powered handheld learning device for children. 
-                      This includes building multiple interconnected applications optimized for embedded Linux systems.
+                      End-to-end development of an educational platform for children aged 5–14 on handheld devices—
+                      spanning Qt/QML client applications, NCERT-aligned AI tutoring, scalable backend infrastructure, 
+                      and sub-5ms vector search for conversational memory.
                     </p>
                   </div>
                 )}
@@ -110,15 +132,14 @@ const Experience = () => {
           ))}
         </div>
 
-        {/* Additional Info */}
         <div className="text-center mt-12">
           <Card className="max-w-2xl mx-auto bg-gradient-accent/10 border-accent/20 animate-fade-in" style={{ animationDelay: '0.6s' }}>
             <CardContent className="p-6">
-              <h3 className="text-lg font-semibold mb-3 text-foreground">Looking Forward</h3>
+              <h3 className="text-lg font-semibold mb-3 text-foreground">Professional Focus</h3>
               <p className="text-muted-foreground">
-                I'm passionate about pushing the boundaries of what's possible with technology. 
-                Whether it's AI-powered solutions, embedded systems, or web applications, 
-                I'm always excited to take on new challenges and learn cutting-edge technologies.
+                Focused on delivering scalable, high-performance systems at the intersection of 
+                embedded software, AI, and cloud infrastructure—with a commitment to continuous 
+                technical growth and engineering excellence.
               </p>
             </CardContent>
           </Card>
