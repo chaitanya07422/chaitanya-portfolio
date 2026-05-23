@@ -1,0 +1,6 @@
+{
+  "framework": null,
+  "installCommand": "cd chaitanyas-digital-canvas && npm ci",
+  "buildCommand": "cd chaitanyas-digital-canvas && npm run build",
+  "outputDirectory": "chaitanyas-digital-canvas/dist"
+}
