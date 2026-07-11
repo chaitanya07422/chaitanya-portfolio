@@ -1,10 +1,12 @@
 # Chaitanya Portfolio
 
-Personal portfolio website for **Kadavakollu Chaitanya** — Software Developer at PocketRocket Labs, showcasing professional experience, projects, achievements, and contact information.
+Personal portfolio website for **Kadavakollu Chaitanya** — Software Engineer at Pocket Rocket Labs, showcasing professional experience, projects, achievements, and contact information.
 
 ## Live site
 
-Deployed on [Vercel](https://vercel.com). Push to `main` triggers a new deployment.
+[https://chaitanya-portfolio-2es6.vercel.app/](https://chaitanya-portfolio-2es6.vercel.app/)
+
+Push to `main` triggers a new Vercel deployment.
 
 ## Repository structure
 
@@ -75,5 +77,5 @@ CI runs on every push to `main` — installs dependencies and verifies the produ
 ## Contact
 
 - **Email:** kadavakolluchaitanya@gmail.com
-- **LinkedIn:** [kadavakollu-chaitanya](https://linkedin.com/in/kadavakollu-chaitanya)
-- **GitHub:** [kadavakollu-chaitanya](https://github.com/kadavakollu-chaitanya)
+- **LinkedIn:** [chaitanya-kadavakollu](https://linkedin.com/in/chaitanya-kadavakollu)
+- **GitHub:** [chaitanya07422](https://github.com/chaitanya07422)

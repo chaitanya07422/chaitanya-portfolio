@@ -1,69 +1,88 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Calendar, Award } from 'lucide-react';
+import { ExternalLink, Calendar } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
+import SectionHeading from '@/components/SectionHeading';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const Certifications = () => {
-  const getPlatformColor = (platform: string) => {
-    const colors: { [key: string]: string } = {
-      'NPTEL': 'bg-primary text-primary-foreground',
-      'Coursera': 'bg-accent text-accent-foreground', 
-      'CISCO Network Academy': 'bg-secondary text-secondary-foreground',
-      'Infosys': 'bg-primary text-primary-foreground'
-    };
-    return colors[platform] || 'bg-muted text-muted-foreground';
-  };
+  const { ref, visible } = useScrollReveal<HTMLElement>();
+  const { primary, secondary } = portfolioData.certifications;
 
   return (
-    <section id="certifications" className="py-20 bg-background">
+    <section
+      id="certifications"
+      ref={ref}
+      className={`py-20 md:py-28 border-t border-border reveal ${visible ? 'reveal-visible' : ''}`}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-            Certifications
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Industry certifications and completed coursework reflecting ongoing professional development.
-          </p>
-        </div>
+        <SectionHeading
+          title="certifications"
+          subtitle="Industry credentials in cloud infrastructure and AI."
+        />
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {portfolioData.certifications.map((cert, index) => (
-            <Card 
-              key={index}
-              className="group hover:shadow-card transition-all duration-500 transform hover:-translate-y-2 animate-fade-in-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <CardHeader className="text-center">
-                <div className="mx-auto mb-4">
-                  <Award className="h-12 w-12 text-primary group-hover:text-accent transition-colors" />
-                </div>
-                <CardTitle className="text-lg font-bold group-hover:text-primary transition-colors text-center">
-                  {cert.name}
-                </CardTitle>
-              </CardHeader>
-              
-              <CardContent className="space-y-4">
-                <Badge className={`${getPlatformColor(cert.platform)} w-full justify-center`}>
-                  {cert.platform}
-                </Badge>
-                
-                <div className="flex items-center justify-center text-sm text-muted-foreground">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  {cert.date}
-                </div>
-                
-                <Button 
-                  variant="outline" 
-                  className="w-full hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+        <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          {primary.map((cert, index) => (
+            <article key={index} className="infra-card border-l-2 border-l-primary p-5 flex flex-col">
+              <h3 className="font-display text-base font-semibold text-foreground leading-snug">
+                {cert.name}
+              </h3>
+              <p className="font-mono text-xs text-primary mt-1">{cert.platform}</p>
+
+              <div className="flex items-center font-mono text-xs text-muted-foreground mt-3">
+                <Calendar className="w-3 h-3 mr-1.5" />
+                {cert.date}
+              </div>
+
+              {'description' in cert && cert.description && (
+                <p className="text-xs text-muted-foreground mt-3 leading-relaxed flex-1">
+                  {cert.description}
+                </p>
+              )}
+
+              {cert.verificationLink && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full mt-4 rounded-sm font-mono text-xs border-border"
                   onClick={() => window.open(cert.verificationLink, '_blank')}
                 >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Verify Certificate
+                  <ExternalLink className="w-3 h-3 mr-1.5" />
+                  verify
                 </Button>
-              </CardContent>
-            </Card>
+              )}
+            </article>
           ))}
+        </div>
+
+        <div className="max-w-3xl mx-auto">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
+            additional credentials
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {secondary.map((cert) => (
+              <div
+                key={cert.name}
+                className="infra-card px-3 py-2 flex items-center gap-3 opacity-70 hover:opacity-100 transition-opacity"
+              >
+                <div>
+                  <p className="font-mono text-xs text-foreground">{cert.name}</p>
+                  <p className="font-mono text-[10px] text-muted-foreground">
+                    {cert.platform} · {cert.date}
+                  </p>
+                </div>
+                {cert.verificationLink && (
+                  <button
+                    type="button"
+                    onClick={() => window.open(cert.verificationLink, '_blank')}
+                    className="text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm p-1"
+                    aria-label={`Verify ${cert.name}`}
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

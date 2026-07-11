@@ -1,238 +1,202 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Github, ExternalLink, Star, Calendar, Building } from 'lucide-react';
+import { Github, ExternalLink, Building } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
+import SectionHeading from '@/components/SectionHeading';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
+
+const categoryColors: Record<string, string> = {
+  'SaaS Platform': 'text-primary border-primary/30',
+  'Cloud Infrastructure': 'text-accent border-accent/30',
+  'Production Platform': 'text-primary border-primary/30',
+  'IoT & AI': 'text-muted-foreground border-border',
+  Competition: 'text-accent border-accent/30',
+};
 
 const Projects = () => {
+  const { ref, visible } = useScrollReveal<HTMLElement>();
   const [selectedCategory, setSelectedCategory] = useState('All');
-  
-  const categories = ['All', 'Current Project', 'Machine Learning', 'Web Application', 'IoT & AI', 'Web Development'];
-  
-  const filteredProjects = selectedCategory === 'All' 
-    ? portfolioData.projects 
-    : portfolioData.projects.filter(project => project.category === selectedCategory);
 
-  const getCategoryColor = (category: string) => {
-    const colors: { [key: string]: string } = {
-      'Current Project': 'bg-primary text-primary-foreground',
-      'Machine Learning': 'bg-accent text-accent-foreground',
-      'Web Application': 'bg-secondary text-secondary-foreground',
-      'IoT & AI': 'bg-primary text-primary-foreground',
-      'Web Development': 'bg-accent text-accent-foreground'
-    };
-    return colors[category] || 'bg-muted text-muted-foreground';
-  };
+  const featured = portfolioData.projects.find((p) => 'featured' in p && p.featured);
+  const otherProjects = portfolioData.projects.filter((p) => !('featured' in p && p.featured));
+
+  const categories = ['All', ...Array.from(new Set(otherProjects.map((p) => p.category)))];
+
+  const filteredProjects =
+    selectedCategory === 'All'
+      ? otherProjects
+      : otherProjects.filter((project) => project.category === selectedCategory);
 
   return (
-    <section id="projects" className="py-20 bg-background">
+    <section
+      id="projects"
+      ref={ref}
+      className={`py-20 md:py-28 border-t border-border reveal ${visible ? 'reveal-visible' : ''}`}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-            Featured Projects
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Selected projects across AI/ML, embedded systems, web applications, and IoT—demonstrating 
-            technical depth and end-to-end delivery capability.
-          </p>
-        </div>
+        <SectionHeading
+          title="projects"
+          subtitle="Production systems, cloud infrastructure, and research across SaaS, AI, and IoT."
+        />
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        {featured && (
+          <article className="infra-card border-l-2 border-l-primary p-6 sm:p-8 mb-10 max-w-4xl mx-auto">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-primary border border-primary/30 px-1.5 py-0.5 rounded-sm">
+                featured
+              </span>
+              <span className="font-mono text-xs text-muted-foreground">{featured.duration}</span>
+              <span className="font-mono text-xs text-muted-foreground">· {featured.status}</span>
+            </div>
+
+            <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground">
+              {featured.title}
+            </h3>
+            <p className="text-sm text-primary mt-1">{featured.subtitle}</p>
+            <p className="text-sm text-muted-foreground mt-4 leading-relaxed max-w-3xl">
+              {featured.description}
+            </p>
+
+            {'architectureGroups' in featured && featured.architectureGroups && (
+              <div className="mt-6 space-y-5">
+                {featured.architectureGroups.map((group, i) => (
+                  <div key={i}>
+                    <h4 className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-2">
+                      {group.title}
+                    </h4>
+                    <ul className="space-y-1.5">
+                      {group.items.map((item, j) => (
+                        <li key={j} className="flex items-start text-sm gap-2">
+                          <span className="text-primary font-mono mt-0.5 shrink-0">&gt;</span>
+                          <span className="text-muted-foreground leading-relaxed">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {'outcomes' in featured && featured.outcomes && (
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {featured.outcomes.map((outcome) => (
+                  <div key={outcome} className="border border-border bg-secondary/30 px-3 py-2 rounded-sm">
+                    <p className="text-xs text-muted-foreground leading-relaxed">{outcome}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="mt-6">
+              <h4 className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-2">
+                <span className="text-primary">$</span> stack
+              </h4>
+              <div className="flex flex-wrap gap-1.5">
+                {featured.technologies.map((tech) => (
+                  <span key={tech} className="tech-tag">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              {featured.github && (
+                <Button variant="outline" size="sm" className="rounded-sm font-mono text-xs border-border" asChild>
+                  <a href={featured.github} target="_blank" rel="noopener noreferrer">
+                    <Github className="w-3.5 h-3.5 mr-1.5" />
+                    source
+                  </a>
+                </Button>
+              )}
+              {'demoUrl' in featured && featured.demoUrl && (
+                <Button variant="outline" size="sm" className="rounded-sm font-mono text-xs border-border" asChild>
+                  <a href={featured.demoUrl as string} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
+                    demo
+                  </a>
+                </Button>
+              )}
+            </div>
+          </article>
+        )}
+
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
           {categories.map((category) => (
             <Button
               key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
+              variant={selectedCategory === category ? 'default' : 'outline'}
+              size="sm"
               onClick={() => setSelectedCategory(category)}
-              className={`transition-all duration-300 ${
-                selectedCategory === category 
-                  ? 'bg-primary text-primary-foreground shadow-glow' 
-                  : 'hover:bg-secondary'
+              className={`rounded-sm font-mono text-xs ${
+                selectedCategory === category
+                  ? 'bg-primary text-primary-foreground'
+                  : 'border-border text-muted-foreground hover:text-foreground'
               }`}
             >
-              {category}
+              {category.toLowerCase()}
             </Button>
           ))}
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
           {filteredProjects.map((project, index) => (
-            <Card 
-              key={index}
-              className={`group hover:shadow-card transition-all duration-500 transform hover:-translate-y-2 animate-fade-in-up overflow-hidden ${
-                project.category === 'Current Project' ? 'border-2 border-primary/50 bg-gradient-to-br from-primary/5 to-transparent' : ''
-              }`}
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <CardHeader className="relative">
-                {project.category === 'Current Project' && (
-                  <div className="absolute -top-1 -right-1">
-                    <Badge className="bg-primary text-primary-foreground animate-glow">
-                      <Star className="w-3 h-3 mr-1" />
-                      Current
-                    </Badge>
-                  </div>
-                )}
-                
-                <div className="flex justify-between items-start mb-2">
-                  <Badge className={getCategoryColor(project.category)}>
-                    {project.category}
-                  </Badge>
-                  {project.achievement && (
-                    <Badge variant="outline" className="border-accent text-accent">
-                      🏆 Finalist
-                    </Badge>
-                  )}
+            <article key={index} className="infra-card p-5 flex flex-col">
+              <div className="flex justify-between items-start gap-2 mb-3">
+                <span
+                  className={`font-mono text-[10px] uppercase tracking-widest border px-1.5 py-0.5 rounded-sm ${
+                    categoryColors[project.category] || 'text-muted-foreground border-border'
+                  }`}
+                >
+                  {project.category}
+                </span>
+                <span className="font-mono text-[10px] text-muted-foreground">{project.status}</span>
+              </div>
+
+              <h3 className="font-display text-base font-semibold text-foreground">
+                {project.title}
+              </h3>
+              <p className="text-xs text-primary mt-0.5">{project.subtitle}</p>
+
+              <p className="text-sm text-muted-foreground mt-3 leading-relaxed flex-1 line-clamp-3">
+                {project.description}
+              </p>
+
+              {project.company && (
+                <div className="flex items-center text-xs text-muted-foreground mt-2 font-mono">
+                  <Building className="w-3 h-3 mr-1" />
+                  {project.company}
                 </div>
+              )}
 
-                <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
-                  {project.title}
-                </CardTitle>
-                <p className="text-sm text-primary font-medium">{project.subtitle}</p>
-              </CardHeader>
+              {project.achievement && (
+                <span className="font-mono text-[10px] text-accent mt-2">{project.achievement}</span>
+              )}
 
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
-                  {project.description}
-                </p>
+              <div className="flex flex-wrap gap-1 mt-4">
+                {project.technologies.slice(0, 5).map((tech) => (
+                  <span key={tech} className="tech-tag">
+                    {tech}
+                  </span>
+                ))}
+              </div>
 
-                {/* Company badge for work projects */}
-                {project.company && (
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Building className="w-4 h-4 mr-1" />
-                    {project.company}
-                  </div>
-                )}
-
-                {/* Status */}
-                <div className="flex items-center justify-between">
-                  <Badge 
-                    variant={project.status === 'In Development' ? 'default' : 'secondary'}
-                    className={project.status === 'In Development' ? 'animate-glow' : ''}
-                  >
-                    {project.status}
-                  </Badge>
-                </div>
-
-                {/* Tech Stack Preview */}
-                <div className="flex flex-wrap gap-1">
-                  {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                    <Badge key={techIndex} variant="outline" className="text-xs">
-                      {tech}
-                    </Badge>
-                  ))}
-                  {project.technologies.length > 3 && (
-                    <Badge variant="outline" className="text-xs">
-                      +{project.technologies.length - 3} more
-                    </Badge>
-                  )}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex space-x-2 pt-2">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" className="flex-1">
-                        Learn More
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-                      <DialogHeader>
-                        <DialogTitle className="text-2xl flex items-center gap-2">
-                          {project.title}
-                          {project.category === 'Current Project' && (
-                            <Badge className="bg-primary text-primary-foreground">
-                              <Star className="w-3 h-3 mr-1" />
-                              Current
-                            </Badge>
-                          )}
-                        </DialogTitle>
-                        <p className="text-primary font-medium">{project.subtitle}</p>
-                      </DialogHeader>
-                      
-                      <div className="space-y-6">
-                        <p className="text-muted-foreground leading-relaxed">
-                          {project.description}
-                        </p>
-
-                        {project.company && (
-                          <div className="flex items-center text-muted-foreground">
-                            <Building className="w-4 h-4 mr-2" />
-                            <span className="font-medium">{project.company}</span>
-                          </div>
-                        )}
-
-                        <div>
-                          <h4 className="font-semibold mb-3">Key Features</h4>
-                          <ul className="space-y-2">
-                            {project.features.map((feature, featureIndex) => (
-                              <li key={featureIndex} className="flex items-start">
-                                <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                                <span className="text-muted-foreground text-sm">{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        <div>
-                          <h4 className="font-semibold mb-3">Technologies Used</h4>
-                          <div className="flex flex-wrap gap-2">
-                            {project.technologies.map((tech, techIndex) => (
-                              <Badge key={techIndex} variant="secondary">
-                                {tech}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-
-                        {project.achievement && (
-                          <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
-                            <h4 className="font-semibold text-accent mb-2 flex items-center">
-                              🏆 Achievement
-                            </h4>
-                            <p className="text-sm text-muted-foreground">{project.achievement}</p>
-                          </div>
-                        )}
-
-                        <div className="flex space-x-2">
-                          {project.github && (
-                            <Button variant="outline" size="sm" asChild>
-                              <a href={project.github || "https://github.com/chaitanya07422"} target="_blank" rel="noopener noreferrer">
-                                <Github className="w-4 h-4 mr-2" />
-                                View Code
-                              </a>
-                            </Button>
-                          )}
-                          <Button variant="outline" size="sm">
-                            <ExternalLink className="w-4 h-4 mr-2" />
-                            Live Demo
-                          </Button>
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-
-                  {project.github && (
-                    <Button variant="ghost" size="icon" asChild>
-                      <a href={project.github || "https://github.com/chaitanya07422"} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-4 w-4" />
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+              <ul className="mt-4 space-y-1 border-t border-border pt-3">
+                {project.features.slice(0, 3).map((feature, i) => (
+                  <li key={i} className="flex items-start text-xs gap-1.5 text-muted-foreground">
+                    <span className="text-primary font-mono shrink-0">&gt;</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </article>
           ))}
         </div>
 
-        {/* No projects message */}
         {filteredProjects.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">No projects found in this category.</p>
-          </div>
+          <p className="text-center text-muted-foreground font-mono text-sm py-12">
+            no projects in this category.
+          </p>
         )}
       </div>
     </section>

@@ -2,112 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 220 30% 97%;
-    --foreground: 220 25% 10%;
+    --background: 240 14% 4%;
+    --foreground: 240 10% 92%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
+    --card: 240 12% 7%;
+    --card-foreground: 240 10% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
+    --popover: 240 12% 7%;
+    --popover-foreground: 240 10% 92%;
 
-    --primary: 259 100% 65%;
-    --primary-foreground: 210 40% 98%;
-    --primary-glow: 259 100% 75%;
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 262 90% 65%;
 
-    --secondary: 220 30% 94%;
-    --secondary-foreground: 220 25% 15%;
+    --secondary: 240 10% 12%;
+    --secondary-foreground: 240 10% 80%;
 
-    --muted: 220 30% 94%;
-    --muted-foreground: 220 15% 50%;
+    --muted: 240 10% 12%;
+    --muted-foreground: 240 8% 55%;
 
-    --accent: 200 100% 70%;
-    --accent-foreground: 220 25% 10%;
+    --accent: 187 85% 53%;
+    --accent-foreground: 240 14% 4%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 30% 88%;
-    --input: 220 30% 88%;
-    --ring: 259 100% 65%;
+    --border: 240 10% 16%;
+    --input: 240 10% 16%;
+    --ring: 262 83% 58%;
 
-    --radius: 0.75rem;
-    
-    /* Custom design tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)));
-    --gradient-hero: linear-gradient(135deg, hsl(259 100% 65% / 0.1), hsl(200 100% 70% / 0.1));
-    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
-    --shadow-card: 0 10px 30px -10px hsl(var(--primary) / 0.1);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --radius: 0.25rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 220 25% 7%;
-    --foreground: 210 40% 98%;
-
-    --card: 220 25% 10%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 220 25% 10%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 259 100% 75%;
-    --primary-foreground: 220 25% 7%;
-    --primary-glow: 259 100% 85%;
-
-    --secondary: 220 25% 15%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 220 25% 15%;
-    --muted-foreground: 220 15% 60%;
-
-    --accent: 200 100% 80%;
-    --accent-foreground: 220 25% 7%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 220 25% 20%;
-    --input: 220 25% 20%;
-    --ring: 259 100% 75%;
-    
-    /* Custom design tokens for dark mode */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)));
-    --gradient-hero: linear-gradient(135deg, hsl(259 100% 75% / 0.1), hsl(200 100% 80% / 0.1));
-    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.5);
-    --shadow-card: 0 10px 30px -10px hsl(var(--primary) / 0.2);
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --gradient-primary: linear-gradient(135deg, hsl(262 83% 58%), hsl(262 90% 65%));
+    --gradient-accent: linear-gradient(135deg, hsl(187 85% 53%), hsl(262 83% 58%));
+    --gradient-hero: radial-gradient(ellipse 80% 60% at 50% -10%, hsl(262 83% 58% / 0.12), transparent);
+    --shadow-glow: 0 0 24px hsl(262 83% 58% / 0.25);
+    --shadow-card: none;
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
@@ -116,7 +49,85 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    @apply scroll-smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    background-color: #0A0A0F;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+}
+
+@layer utilities {
+  .reveal {
+    @apply opacity-0 translate-y-4 transition-all duration-700 ease-out;
+  }
+
+  .reveal-visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .tech-tag {
+    @apply font-mono text-[11px] px-2 py-0.5 border border-border text-muted-foreground bg-secondary/50 rounded-sm;
+  }
+
+  .infra-card {
+    @apply border border-border bg-card rounded-sm transition-colors duration-200;
+  }
+
+  .infra-card:hover {
+    @apply border-primary/30;
+  }
+
+  .name-gradient {
+    background: linear-gradient(135deg, hsl(0 0% 98%) 0%, hsl(262 83% 75%) 50%, hsl(187 85% 65%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .terminal-glow {
+    box-shadow:
+      0 0 0 1px hsl(var(--border)),
+      0 0 40px hsl(262 83% 58% / 0.08),
+      0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .terminal-glow:hover {
+    box-shadow:
+      0 0 0 1px hsl(262 83% 58% / 0.3),
+      0 0 60px hsl(262 83% 58% / 0.15),
+      0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-bounce {
+    animation: none !important;
   }
 }

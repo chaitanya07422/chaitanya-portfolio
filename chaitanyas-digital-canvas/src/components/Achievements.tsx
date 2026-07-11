@@ -1,80 +1,108 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Trophy, Award, Users, Calendar } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { Trophy, Award, Users, FileText, Code2 } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
+import SectionHeading from '@/components/SectionHeading';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
+
+const categoryIcons: Record<string, ReactNode> = {
+  Competition: <Trophy className="h-4 w-4 text-accent shrink-0" />,
+  Leadership: <Users className="h-4 w-4 text-primary shrink-0" />,
+  Patent: <FileText className="h-4 w-4 text-primary shrink-0" />,
+  Engineering: <Award className="h-4 w-4 text-primary shrink-0" />,
+  'Competitive Programming': <Code2 className="h-4 w-4 text-accent shrink-0" />,
+};
 
 const Achievements = () => {
-  const getIcon = (category: string) => {
-    switch (category) {
-      case 'Competition':
-        return <Trophy className="h-6 w-6 text-accent" />;
-      case 'Leadership':
-        return <Users className="h-6 w-6 text-primary" />;
-      default:
-        return <Award className="h-6 w-6 text-primary" />;
-    }
-  };
+  const { ref, visible } = useScrollReveal<HTMLElement>();
+
+  const featured = portfolioData.achievements.filter(
+    (a) => 'featured' in a && a.featured
+  );
+  const metrics = portfolioData.achievements.filter(
+    (a) => !('featured' in a && a.featured)
+  );
 
   return (
-    <section id="achievements" className="py-20 bg-muted/30">
+    <section
+      id="achievements"
+      ref={ref}
+      className={`py-20 md:py-28 border-t border-border reveal ${visible ? 'reveal-visible' : ''}`}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-            Achievements & Recognition
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Key milestones in engineering performance, technical competition, and team leadership.
-          </p>
+        <SectionHeading
+          title="achievements"
+          subtitle="Engineering impact, global competition recognition, intellectual property, and technical milestones."
+        />
+
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          {featured.map((achievement, index) => (
+            <article
+              key={index}
+              className="infra-card border-l-2 border-l-primary p-6"
+            >
+              <div className="flex items-start gap-3 mb-3">
+                {categoryIcons[achievement.category]}
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-primary">
+                    {achievement.category}
+                  </span>
+                  <h3 className="font-display text-lg font-semibold text-foreground mt-1 leading-snug">
+                    {achievement.title}
+                  </h3>
+                  {'subtitle' in achievement && achievement.subtitle && (
+                    <p className="font-mono text-xs text-accent mt-0.5">{achievement.subtitle}</p>
+                  )}
+                </div>
+              </div>
+
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {achievement.description}
+              </p>
+
+              {'stats' in achievement && achievement.stats && (
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {achievement.stats.map((stat) => (
+                    <span
+                      key={stat}
+                      className="font-mono text-[10px] border border-border px-2 py-1 rounded-sm text-muted-foreground"
+                    >
+                      {stat}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <div className="flex items-center gap-3 mt-4 font-mono text-xs text-muted-foreground">
+                <span>{achievement.date}</span>
+                {achievement.role && (
+                  <>
+                    <span className="text-border">·</span>
+                    <span className="text-primary">{achievement.role}</span>
+                  </>
+                )}
+              </div>
+            </article>
+          ))}
         </div>
 
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          {portfolioData.achievements.map((achievement, index) => (
-            <Card 
-              key={index}
-              className="group hover:shadow-card transition-all duration-500 transform hover:-translate-y-2 animate-fade-in-up border-l-4 border-l-accent bg-gradient-to-r from-accent/5 to-transparent"
-              style={{ animationDelay: `${index * 0.2}s` }}
-            >
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center space-x-3">
-                    {getIcon(achievement.category)}
-                    <div>
-                      <CardTitle className="text-lg font-bold group-hover:text-primary transition-colors">
-                        {achievement.title}
-                      </CardTitle>
-                      <Badge variant="outline" className="mt-1">
-                        {achievement.category}
-                      </Badge>
-                    </div>
-                  </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {achievement.date}
-                  </div>
-                </div>
-              </CardHeader>
-              
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  {achievement.description}
-                </p>
-                
-                {achievement.role && (
-                  <Badge className="bg-primary text-primary-foreground">
-                    {achievement.role}
-                  </Badge>
+        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {metrics.map((achievement, index) => (
+            <article key={index} className="infra-card p-4">
+              <div className="flex items-start gap-2 mb-2">
+                {categoryIcons[achievement.category] || (
+                  <Award className="h-4 w-4 text-primary shrink-0" />
                 )}
-                
-                {achievement.title.includes('NASA') && (
-                  <div className="mt-4 p-3 bg-accent/10 border border-accent/20 rounded-lg">
-                    <p className="text-sm text-accent font-semibold">🚀 NASA Space Apps Challenge Impact</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Among 2,000+ global participants, recognized for innovative satellite data accessibility solutions.
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                <h3 className="text-sm font-medium text-foreground leading-snug">
+                  {achievement.title}
+                </h3>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed pl-6">
+                {achievement.description}
+              </p>
+              <p className="font-mono text-[10px] text-muted-foreground mt-2 pl-6">
+                {achievement.date}
+              </p>
+            </article>
           ))}
         </div>
       </div>

@@ -1,33 +1,58 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Moon, Sun, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import { portfolioData } from '@/data/portfolio';
+import { navTooltips } from '@/data/devHumor';
+
+const navItems = [
+  { label: 'home', href: '#home', id: 'home' },
+  { label: 'summary', href: '#about', id: 'about' },
+  { label: 'experience', href: '#experience', id: 'experience' },
+  { label: 'projects', href: '#projects', id: 'projects' },
+  { label: 'achievements', href: '#achievements', id: 'achievements' },
+  { label: 'certs', href: '#certifications', id: 'certifications' },
+  { label: 'contact', href: '#contact', id: 'contact' },
+];
 
 const Navigation = () => {
-  const [isDark, setIsDark] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [logoClicks, setLogoClicks] = useState(0);
+  const [logoJoke, setLogoJoke] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
+
+      const sectionIds = navItems.map((item) => item.id);
+      let current = sectionIds[0];
+
+      for (const id of sectionIds) {
+        const element = document.getElementById(id);
+        if (element && element.getBoundingClientRect().top <= 120) {
+          current = id;
+        }
+      }
+
+      setActiveSection(current);
     };
-    window.addEventListener('scroll', handleScroll);
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle('dark');
+  const handleLogoClick = () => {
+    const next = logoClicks + 1;
+    setLogoClicks(next);
+    if (next >= 5) {
+      setLogoJoke(true);
+      setTimeout(() => setLogoJoke(false), 3000);
+      setLogoClicks(0);
+    }
+    scrollToSection('#home');
   };
-
-  const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Achievements', href: '#achievements' },
-    { label: 'Contact', href: '#contact' }
-  ];
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -36,61 +61,74 @@ const Navigation = () => {
   };
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      scrolled ? 'bg-background/80 backdrop-blur-md shadow-card' : 'bg-transparent'
-    }`}>
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${
+        scrolled
+          ? 'bg-[#0A0A0F]/90 backdrop-blur-md border-border'
+          : 'bg-transparent border-transparent'
+      }`}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            Chaitanya Kadavakollu
+        <div className="flex justify-between items-center h-14">
+          <div className="relative">
+            <button
+              type="button"
+              onClick={handleLogoClick}
+              className="font-mono text-sm font-medium text-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+            >
+              <span className="text-primary">~/</span>
+              {portfolioData.personal.name.split(' ').pop()?.toLowerCase()}
+            </button>
+            {logoJoke && (
+              <span className="absolute top-full left-0 mt-1 font-mono text-[10px] text-accent whitespace-nowrap animate-fade-in">
+                sudo hire-me ✓
+              </span>
+            )}
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex gap-6">
             {navItems.map((item) => (
               <button
                 key={item.label}
+                type="button"
+                title={navTooltips[item.id]}
                 onClick={() => scrollToSection(item.href)}
-                className="text-foreground hover:text-primary transition-colors relative group"
+                className={`font-mono text-xs uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm px-1 ${
+                  activeSection === item.id
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </button>
             ))}
           </div>
 
-          {/* Theme Toggle & Mobile Menu */}
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="hover:bg-secondary"
-            >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
-          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden hover:bg-secondary rounded-sm"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
         </div>
 
-        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden bg-card border border-border rounded-lg mt-2 p-4 shadow-card animate-fade-in">
+          <div className="md:hidden border border-border bg-card rounded-sm mt-1 mb-2 p-2">
             {navItems.map((item) => (
               <button
                 key={item.label}
+                type="button"
                 onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left py-2 px-4 rounded-md hover:bg-secondary transition-colors"
+                className={`block w-full text-left py-2 px-3 font-mono text-xs uppercase tracking-wide rounded-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                  activeSection === item.id
+                    ? 'text-primary bg-primary/10'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                }`}
               >
+                <span className="text-primary/50 mr-2">{navTooltips[item.id]}</span>
                 {item.label}
               </button>
             ))}
