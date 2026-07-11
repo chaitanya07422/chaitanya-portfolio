@@ -53,9 +53,22 @@ export const hiringCheck = {
       out: 'OPEN_TO_OPPORTUNITIES=true',
       tone: 'success',
     },
+    {
+      cmd: 'curl -s /api/theme/light',
+      out: 'HTTP 404 — dark-only on main, same as my IDE',
+      tone: 'muted',
+    },
   ],
   note: '// early career, production-proven — open to teams that value shipping over seniority',
 } as const;
 
-export type TrafficLightAction = keyof typeof trafficLightJokes;
+export const themeTogglePopup = {
+  title: 'theme.sh',
+  lines: [
+    { cmd: 'git branch light-mode', out: 'fatal: branch not found', tone: 'destructive' },
+    { cmd: 'git branch --show-current', out: 'main', tone: 'success' },
+  ],
+  status: 'HTTP 404 — dark-only on main, same as my IDE',
+} as const;
+
 export type StackPanelAction = keyof typeof stackPanelJokes;

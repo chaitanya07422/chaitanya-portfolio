@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Moon } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
 import { navTooltips } from '@/data/devHumor';
+import ThemeJokePopup from '@/components/ThemeJokePopup';
 
 const navItems = [
   { label: 'home', href: '#home', id: 'home' },
@@ -20,6 +21,14 @@ const Navigation = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [logoClicks, setLogoClicks] = useState(0);
   const [logoJoke, setLogoJoke] = useState(false);
+  const [themeJoke, setThemeJoke] = useState(false);
+  const themeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (themeTimeoutRef.current) clearTimeout(themeTimeoutRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,6 +63,12 @@ const Navigation = () => {
     scrollToSection('#home');
   };
 
+  const handleThemeClick = () => {
+    if (themeTimeoutRef.current) clearTimeout(themeTimeoutRef.current);
+    setThemeJoke(true);
+    themeTimeoutRef.current = setTimeout(() => setThemeJoke(false), 4000);
+  };
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -86,7 +101,7 @@ const Navigation = () => {
             )}
           </div>
 
-          <div className="hidden md:flex gap-6">
+          <div className="hidden md:flex items-center gap-4">
             {navItems.map((item) => (
               <button
                 key={item.label}
@@ -102,7 +117,42 @@ const Navigation = () => {
                 {item.label}
               </button>
             ))}
+
+            <div className="relative">
+              <button
+                type="button"
+                onClick={handleThemeClick}
+                title="Toggle theme"
+                aria-label="Toggle theme — dark mode only"
+                aria-expanded={themeJoke}
+                className={`rounded-sm p-1 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                  themeJoke
+                    ? 'text-primary bg-primary/10 shadow-[0_0_12px_hsl(262_83%_58%_/_0.35)]'
+                    : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
+                }`}
+              >
+                <Moon className={`h-3.5 w-3.5 ${themeJoke ? 'animate-pulse' : ''}`} />
+              </button>
+              {themeJoke && (
+                <div className="absolute top-full right-0 mt-2 w-72 z-50">
+                  <ThemeJokePopup />
+                </div>
+              )}
+            </div>
           </div>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`md:hidden rounded-sm relative ${
+              themeJoke ? 'text-primary bg-primary/10' : 'hover:bg-secondary'
+            }`}
+            onClick={handleThemeClick}
+            aria-label="Toggle theme — dark mode only"
+            aria-expanded={themeJoke}
+          >
+            <Moon className={`h-4 w-4 ${themeJoke ? 'animate-pulse' : ''}`} />
+          </Button>
 
           <Button
             variant="ghost"
@@ -114,6 +164,12 @@ const Navigation = () => {
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
         </div>
+
+        {themeJoke && (
+          <div className="md:hidden pb-2 animate-popup-in">
+            <ThemeJokePopup />
+          </div>
+        )}
 
         {isMenuOpen && (
           <div className="md:hidden border border-border bg-card rounded-sm mt-1 mb-2 p-2">
