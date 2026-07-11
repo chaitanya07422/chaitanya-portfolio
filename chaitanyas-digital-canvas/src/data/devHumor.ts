@@ -30,4 +30,11 @@ export const trafficLightJokes = {
   maximize: 'DISPLAY=:0 already set — viewport at 100vw since deploy',
 } as const;
 
+export const stackPanelJokes = {
+  close: 'rm stack.config.ts — Permission denied (file is in production)',
+  minimize: 'collapse all — 5 services still running in background',
+  maximize: 'zoom: 100% — entire infra already visible, nothing left to scale',
+} as const;
+
 export type TrafficLightAction = keyof typeof trafficLightJokes;
+export type StackPanelAction = keyof typeof stackPanelJokes;

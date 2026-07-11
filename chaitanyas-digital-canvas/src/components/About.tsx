@@ -1,7 +1,7 @@
-import { Badge } from '@/components/ui/badge';
 import { GraduationCap, Calendar, MapPin } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
 import SectionHeading from '@/components/SectionHeading';
+import DevSummaryPanel from '@/components/DevSummaryPanel';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const About = () => {
@@ -24,10 +24,14 @@ const About = () => {
       className={`relative py-20 md:py-28 border-t border-border reveal ${visible ? 'reveal-visible' : ''}`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading
-          title="summary"
-          subtitle={portfolioData.personal.bio}
-        />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start mb-16">
+          <SectionHeading
+            title="summary"
+            subtitle={portfolioData.personal.bio}
+            className="mb-0"
+          />
+          <DevSummaryPanel />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div className="space-y-6">
