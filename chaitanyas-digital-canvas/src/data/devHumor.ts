@@ -36,5 +36,26 @@ export const stackPanelJokes = {
   maximize: 'zoom: 100% — entire infra already visible, nothing left to scale',
 } as const;
 
+export const hiringCheck = {
+  commands: [
+    {
+      cmd: 'cat profile.json | jq .experienceYears',
+      out: '1.5',
+      tone: 'muted',
+    },
+    {
+      cmd: 'cat profile.json | jq .buildScope',
+      out: '"scratch → staging → production"',
+      tone: 'accent',
+    },
+    {
+      cmd: 'cat availability.env',
+      out: 'OPEN_TO_OPPORTUNITIES=true',
+      tone: 'success',
+    },
+  ],
+  note: '// early career, production-proven — open to teams that value shipping over seniority',
+} as const;
+
 export type TrafficLightAction = keyof typeof trafficLightJokes;
 export type StackPanelAction = keyof typeof stackPanelJokes;

@@ -1,5 +1,6 @@
 import { GraduationCap, Calendar, MapPin } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
+import { hiringCheck } from '@/data/devHumor';
 import SectionHeading from '@/components/SectionHeading';
 import DevSummaryPanel from '@/components/DevSummaryPanel';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
@@ -25,11 +26,41 @@ const About = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start mb-16">
-          <SectionHeading
-            title="summary"
-            subtitle={portfolioData.personal.bio}
-            className="mb-0"
-          />
+          <div className="space-y-6">
+            <SectionHeading
+              title="summary"
+              subtitle={portfolioData.personal.bio}
+              className="mb-0"
+            />
+
+            <div className="infra-card p-4 font-mono text-[11px] sm:text-xs">
+              <p className="text-muted-foreground/60 mb-2.5">// hiring.check</p>
+              <div className="space-y-1">
+                {hiringCheck.commands.map((line) => (
+                  <div key={line.cmd}>
+                    <p className="text-foreground/80 break-words">
+                      <span className="text-primary">$</span> {line.cmd}
+                    </p>
+                    <p
+                      className={`pl-4 ${
+                        line.tone === 'success'
+                          ? 'text-emerald-400'
+                          : line.tone === 'muted'
+                            ? 'text-muted-foreground'
+                            : 'text-accent'
+                      }`}
+                    >
+                      → {line.out}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-2.5 pt-2.5 border-t border-border/60 text-muted-foreground/70 flex items-start gap-2 leading-relaxed">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0 mt-1" />
+                {hiringCheck.note}
+              </p>
+            </div>
+          </div>
           <DevSummaryPanel />
         </div>
 
