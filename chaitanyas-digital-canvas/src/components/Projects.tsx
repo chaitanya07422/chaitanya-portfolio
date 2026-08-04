@@ -6,6 +6,7 @@ import SectionHeading from '@/components/SectionHeading';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const categoryColors: Record<string, string> = {
+  'AI Platform': 'text-primary border-primary/30',
   'SaaS Platform': 'text-primary border-primary/30',
   'Cloud Infrastructure': 'text-accent border-accent/30',
   'Production Platform': 'text-primary border-primary/30',

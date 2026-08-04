@@ -1,21 +1,27 @@
 import { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Moon } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
 import { navTooltips } from '@/data/devHumor';
 import ThemeJokePopup from '@/components/ThemeJokePopup';
 
-const navItems = [
+const sectionItems = [
   { label: 'home', href: '#home', id: 'home' },
   { label: 'summary', href: '#about', id: 'about' },
   { label: 'experience', href: '#experience', id: 'experience' },
   { label: 'projects', href: '#projects', id: 'projects' },
   { label: 'achievements', href: '#achievements', id: 'achievements' },
   { label: 'certs', href: '#certifications', id: 'certifications' },
+  { label: 'blogs', href: '#blog', id: 'blog' },
   { label: 'contact', href: '#contact', id: 'contact' },
 ];
 
 const Navigation = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === '/';
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -31,10 +37,12 @@ const Navigation = () => {
   }, []);
 
   useEffect(() => {
+    if (!isHome) return;
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
 
-      const sectionIds = navItems.map((item) => item.id);
+      const sectionIds = sectionItems.map((item) => item.id);
       let current = sectionIds[0];
 
       for (const id of sectionIds) {
@@ -50,6 +58,13 @@ const Navigation = () => {
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, [isHome]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const handleLogoClick = () => {
@@ -60,7 +75,7 @@ const Navigation = () => {
       setTimeout(() => setLogoJoke(false), 3000);
       setLogoClicks(0);
     }
-    scrollToSection('#home');
+    goHome();
   };
 
   const handleThemeClick = () => {
@@ -69,9 +84,22 @@ const Navigation = () => {
     themeTimeoutRef.current = setTimeout(() => setThemeJoke(false), 4000);
   };
 
+  const goHome = () => {
+    if (isHome) {
+      document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/');
+    }
+    setIsMenuOpen(false);
+  };
+
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    if (!isHome) {
+      navigate('/' + href);
+      setIsMenuOpen(false);
+      return;
+    }
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
   };
 
@@ -102,14 +130,14 @@ const Navigation = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            {navItems.map((item) => (
+            {sectionItems.map((item) => (
               <button
                 key={item.label}
                 type="button"
                 title={navTooltips[item.id]}
                 onClick={() => scrollToSection(item.href)}
                 className={`font-mono text-xs uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm px-1 ${
-                  activeSection === item.id
+                  isHome && activeSection === item.id
                     ? 'text-primary'
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
@@ -173,13 +201,13 @@ const Navigation = () => {
 
         {isMenuOpen && (
           <div className="md:hidden border border-border bg-card rounded-sm mt-1 mb-2 p-2">
-            {navItems.map((item) => (
+            {sectionItems.map((item) => (
               <button
                 key={item.label}
                 type="button"
                 onClick={() => scrollToSection(item.href)}
                 className={`block w-full text-left py-2 px-3 font-mono text-xs uppercase tracking-wide rounded-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                  activeSection === item.id
+                  isHome && activeSection === item.id
                     ? 'text-primary bg-primary/10'
                     : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
                 }`}

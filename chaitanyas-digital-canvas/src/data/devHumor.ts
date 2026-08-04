@@ -21,6 +21,7 @@ export const navTooltips: Record<string, string> = {
   projects: 'ls -la ./projects',
   achievements: 'cat trophies.txt',
   certs: 'ls ~/certificates',
+  blog: 'cat ~/blog/*.md',
   contact: 'ssh chaitanya@inbox',
 };
 

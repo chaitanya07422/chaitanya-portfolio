@@ -2,5 +2,6 @@
   "framework": null,
   "installCommand": "cd chaitanyas-digital-canvas && npm ci",
   "buildCommand": "cd chaitanyas-digital-canvas && npm run build",
-  "outputDirectory": "chaitanyas-digital-canvas/dist"
+  "outputDirectory": "chaitanyas-digital-canvas/dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

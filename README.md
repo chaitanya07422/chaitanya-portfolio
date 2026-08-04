@@ -50,6 +50,25 @@ Most portfolio content lives in a single file:
 
 Edit experience, projects, skills, bio, and contact details there, then commit and push.
 
+### Blog posts
+
+Add a Markdown file under `chaitanyas-digital-canvas/src/content/blog/`:
+
+```md
+---
+title: My Post Title
+date: 2026-08-04
+description: Short summary for the list page.
+tags: [ai, backend]
+---
+
+# My Post Title
+
+Your markdown content here.
+```
+
+The filename becomes the URL slug (`my-post.md` → `/blog/my-post`). No database required — posts are bundled at build time.
+
 ## Tech stack
 
 - **Framework:** React 18, TypeScript, Vite
