@@ -177,14 +177,14 @@ Stop a run and keep partial work, or wipe and restart. Preview a voice before ge
 
 ---
 
-## Outcomes — what I achieved
+## What this shows I can do
 
-- Shipped an **end-to-end AI video system** — topic in, branded YouTube Short out — not a single model demo
-- Separated **orchestration** (API + Redis queue) from **compute** (workers + stage scripts) so the UI stays responsive under long jobs
-- Built a **local-first AI pipeline** (SDXL, Kokoro, Whisper, Remotion) with cloud used only for script planning — lower cost and more control
-- Replaced manual editing with **programmatic Remotion renders** (1080×1920 Shorts + captions + brand bookends)
-- Shipped **production DevOps**: Docker Compose, GHCR images, GitHub Actions, and auto-deploy to a self-hosted Dell runner
-- Made failures recoverable: **resume from any stage**, status reconcile, stop keep/wipe, and inspectable artifacts on disk
+- Design an **end-to-end AI system**, not just call one model API
+- Separate **orchestration** (API/queue) from **compute** (workers/scripts)
+- Build **local-first AI** pipelines with real cost and privacy constraints
+- Ship **programmatic video** (Remotion) instead of manual editing
+- Own **DevOps**: containers, CI/CD, self-hosted deploy
+- Think in **failure modes**: resume, reconcile, stop/wipe, inspectable artifacts
 
 ---
 
