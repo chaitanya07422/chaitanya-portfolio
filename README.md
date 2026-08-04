@@ -67,7 +67,7 @@ tags: [ai, backend]
 Your markdown content here.
 ```
 
-The filename becomes the URL slug (`my-post.md` → `/blog/my-post`). No database required — posts are bundled at build time.
+The filename becomes the URL slug (`my-post.md` → `/blog/my-post`).
 
 ## Tech stack
 
