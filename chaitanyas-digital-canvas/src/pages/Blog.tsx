@@ -29,7 +29,6 @@ const Blog = () => {
             </h1>
             <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
               Notes on AI systems, self-hosted infrastructure, and shipping production pipelines.
-              Posts live as Markdown files — no CMS, no database.
             </p>
           </header>
 
