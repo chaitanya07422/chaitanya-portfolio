@@ -5,6 +5,7 @@ import { Menu, X, Moon } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
 import { navTooltips } from '@/data/devHumor';
 import ThemeJokePopup from '@/components/ThemeJokePopup';
+import { trackEvent } from '@/lib/analytics';
 
 const sectionItems = [
   { label: 'home', href: '#home', id: 'home' },
@@ -79,6 +80,7 @@ const Navigation = () => {
   };
 
   const handleThemeClick = () => {
+    trackEvent('theme_toggle_joke');
     if (themeTimeoutRef.current) clearTimeout(themeTimeoutRef.current);
     setThemeJoke(true);
     themeTimeoutRef.current = setTimeout(() => setThemeJoke(false), 4000);
@@ -94,6 +96,7 @@ const Navigation = () => {
   };
 
   const scrollToSection = (href: string) => {
+    trackEvent('nav_click', { target: href.replace('#', '') });
     if (!isHome) {
       navigate('/' + href);
       setIsMenuOpen(false);

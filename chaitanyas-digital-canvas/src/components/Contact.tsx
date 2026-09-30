@@ -8,6 +8,7 @@ import { portfolioData } from '@/data/portfolio';
 import emailjs from '@emailjs/browser';
 import SectionHeading from '@/components/SectionHeading';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { trackEvent } from '@/lib/analytics';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -42,10 +43,15 @@ const Contact = () => {
         '3ZlpL-EYmVg3YfUCl'
       )
       .then(() => {
+        trackEvent('contact_submit', {
+          subject: formData.subject,
+          has_message: Boolean(formData.message),
+        });
         toast({ title: 'Message sent', description: 'I will respond shortly.' });
         setFormData({ name: '', email: '', subject: '', message: '' });
       })
       .catch((error) => {
+        trackEvent('contact_submit_failed');
         toast({
           title: 'Unable to send',
           description: 'Please try again or email directly.',
@@ -57,6 +63,7 @@ const Contact = () => {
 
   const copyToClipboard = (text: string, type: string) => {
     navigator.clipboard.writeText(text);
+    trackEvent('contact_copy', { type });
     toast({ title: 'Copied', description: `${type} copied to clipboard.` });
   };
 
@@ -127,6 +134,7 @@ const Contact = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
+                    onClick={() => trackEvent('social_click', { network: label, source: 'contact' })}
                     className="text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm p-2 border border-border hover:border-primary/30"
                   >
                     <Icon className="h-4 w-4" />

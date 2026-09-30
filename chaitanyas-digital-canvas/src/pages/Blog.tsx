@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { getAllPosts } from '@/lib/blog';
+import { trackEvent } from '@/lib/analytics';
 
 const Blog = () => {
   const posts = getAllPosts();
@@ -41,6 +42,7 @@ const Blog = () => {
                 <li key={post.slug}>
                   <Link
                     to={`/blog/${post.slug}`}
+                    onClick={() => trackEvent('blog_click', { slug: post.slug, source: 'blog_list' })}
                     className="block infra-card p-5 hover:border-primary/40 transition-colors group"
                   >
                     <div className="flex flex-wrap items-center gap-2 mb-2">

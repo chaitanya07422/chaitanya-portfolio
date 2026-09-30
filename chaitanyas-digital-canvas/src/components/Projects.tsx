@@ -4,6 +4,7 @@ import { Github, ExternalLink, Building } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
 import SectionHeading from '@/components/SectionHeading';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { trackEvent } from '@/lib/analytics';
 
 const categoryColors: Record<string, string> = {
   'AI Platform': 'text-primary border-primary/30',
@@ -104,7 +105,18 @@ const Projects = () => {
             <div className="flex gap-3 mt-6">
               {featured.github && (
                 <Button variant="outline" size="sm" className="rounded-sm font-mono text-xs border-border" asChild>
-                  <a href={featured.github} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={featured.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackEvent('project_link_click', {
+                        project: featured.title,
+                        link_type: 'github',
+                        featured: true,
+                      })
+                    }
+                  >
                     <Github className="w-3.5 h-3.5 mr-1.5" />
                     source
                   </a>
@@ -112,7 +124,18 @@ const Projects = () => {
               )}
               {'demoUrl' in featured && featured.demoUrl && (
                 <Button variant="outline" size="sm" className="rounded-sm font-mono text-xs border-border" asChild>
-                  <a href={featured.demoUrl as string} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={featured.demoUrl as string}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackEvent('project_link_click', {
+                        project: featured.title,
+                        link_type: 'demo',
+                        featured: true,
+                      })
+                    }
+                  >
                     <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
                     demo
                   </a>
@@ -128,7 +151,10 @@ const Projects = () => {
               key={category}
               variant={selectedCategory === category ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => {
+                setSelectedCategory(category);
+                trackEvent('project_filter', { category });
+              }}
               className={`rounded-sm font-mono text-xs ${
                 selectedCategory === category
                   ? 'bg-primary text-primary-foreground'

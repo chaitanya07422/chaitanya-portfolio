@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Github, Linkedin, Code } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
 import { footerQuips } from '@/data/devHumor';
+import { trackEvent } from '@/lib/analytics';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -44,6 +45,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
+                onClick={() => trackEvent('social_click', { network: label, source: 'footer' })}
                 className="text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm p-1"
               >
                 <Icon className="h-4 w-4" />

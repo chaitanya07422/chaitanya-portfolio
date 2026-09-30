@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import SectionHeading from '@/components/SectionHeading';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { getAllPosts } from '@/lib/blog';
+import { trackEvent } from '@/lib/analytics';
 
 const BlogSection = () => {
   const { ref, visible } = useScrollReveal<HTMLElement>();
@@ -25,6 +26,7 @@ const BlogSection = () => {
               <li key={post.slug}>
                 <Link
                   to={`/blog/${post.slug}`}
+                  onClick={() => trackEvent('blog_click', { slug: post.slug, source: 'home' })}
                   className="infra-card aspect-square p-5 sm:p-6 flex flex-col group"
                 >
                   <div className="flex flex-wrap items-center gap-2 mb-3">

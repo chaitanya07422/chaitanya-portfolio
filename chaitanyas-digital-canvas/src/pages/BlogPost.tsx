@@ -2,15 +2,25 @@ import { Link, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ArrowLeft } from 'lucide-react';
+import { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import NotFound from '@/pages/NotFound';
 import { markdownComponents } from '@/components/MarkdownComponents';
 import { getPostBySlug } from '@/lib/blog';
+import { trackEvent } from '@/lib/analytics';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? getPostBySlug(slug) : undefined;
+
+  useEffect(() => {
+    if (!post) return;
+    trackEvent('blog_read', {
+      slug: post.slug,
+      title: post.title,
+    });
+  }, [post]);
 
   if (!post) return <NotFound />;
 

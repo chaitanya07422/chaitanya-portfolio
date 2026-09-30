@@ -5,9 +5,11 @@ import TerminalWindow from '@/components/TerminalWindow';
 import StatReadout from '@/components/StatReadout';
 import GridBackground from '@/components/GridBackground';
 import DevQuote from '@/components/DevQuote';
+import { trackEvent } from '@/lib/analytics';
 
 const Hero = () => {
   const scrollToSection = (sectionId: string) => {
+    trackEvent('cta_click', { target: sectionId, source: 'hero' });
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -84,6 +86,7 @@ const Hero = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
+                  onClick={() => trackEvent('social_click', { network: label, source: 'hero' })}
                   className="text-muted-foreground hover:text-primary hover:scale-110 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm p-1"
                 >
                   <Icon className="h-5 w-5" />
