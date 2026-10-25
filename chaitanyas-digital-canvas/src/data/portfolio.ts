@@ -270,6 +270,67 @@ export const portfolioData = {
       duration: "2026 – Present",
     },
     {
+      title: "ScanLead",
+      subtitle: "URL-Only Multi-Agent Vulnerability Scanner",
+      category: "Security Platform",
+      description:
+        "Authorized, detect-only security scanner: paste a URL you own, specialist agents run one-shot exposure checks (recon, JS audit, upload surfaces, WordPress auth/leaks, ports), then return a company-ready brief with per-agent Clear/Attention summary, LLM explanations, and a high-level abuse path — no signup, no password sprays, no exploit payloads.",
+      architectureGroups: [
+        {
+          title: "Agent pipeline",
+          items: [
+            "FastAPI lead runner orchestrates plugin agents from YAML playbooks (recon → js_audit → mid agents → adapt → reporter)",
+            "js_audit downloads full SPA bundles and matches resumePath / client MIME / upload chains without login",
+            "Upload probes require real JSON API evidence — HTML soft-404s and CMS theme pages are rejected",
+            "Adapt uses Gemini to suggest one-shot paths from fingerprint + JS-discovered /api/* routes",
+          ],
+        },
+        {
+          title: "Client brief & UX",
+          items: [
+            "ScanLead Next.js UI: ownership attestation, live poll, severity cards, report.md + audit.json download",
+            "Per-agent What we checked rollup (Clear / Attention); only says “looks solid” when zero low+ findings remain",
+            "LLM-written Why it matters + Fix on priority findings; brief abuse narrative without operational exploit detail",
+          ],
+        },
+        {
+          title: "Hardening",
+          items: [
+            "SSRF allowlist, global RPS limiter, optional Mongo + ARQ/Redis workers",
+            "Finding dedupe across overlapping js_audit / adapt / upload cards",
+            "Stack-adaptive risk stories from finding signals (WordPress enum/XML-RPC vs SPA upload chains)",
+          ],
+        },
+      ],
+      outcomes: [
+        "Real upload/resume risks auto-detected on SPA/Express apps from JS + HTTP probes",
+        "WordPress false positives (HTML 404 “Log in”, license noise) filtered; real user enum / XML-RPC kept",
+        "Trusted, no-signup scan flow aimed at company-ready briefs rather than raw tool dump",
+      ],
+      features: [
+        "URL-only scan with ownership attestation",
+        "Multi-agent detect-only probes (recon, JS audit, upload, auth, leaks, CORS, ports, adapt)",
+        "Gemini-backed explanations and high-level abuse path",
+        "Per-agent summary + markdown report / audit download",
+        "FastAPI backend + Next.js ScanLead frontend",
+      ],
+      technologies: [
+        "FastAPI",
+        "Python",
+        "Next.js",
+        "TypeScript",
+        "Gemini",
+        "httpx",
+        "MongoDB",
+        "Redis",
+        "ARQ",
+        "Docker",
+      ],
+      status: "In Development",
+      duration: "2026 – Present",
+      github: "https://github.com/chaitanya07422/vuln-agent",
+    },
+    {
       title: "Local AI Video Studio",
       subtitle: "Self-Hosted AI Content OS for Educational YouTube Videos",
       category: "AI Platform",
